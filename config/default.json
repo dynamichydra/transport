@@ -1,0 +1,38 @@
+{
+  "IP":"localhost",
+  "PORT":"3005",
+  "TABLE_DEFINITION":{
+    "employee":["id","name","email","ph","ph_alt","pwd","login_time","address","type","pic","status","access_token"],
+    "emp_doc":["id","emp_id","doc_title","doc"],
+    "client":["id","name","email","ph","company","bank_name","acc_no","address","branch","ifsc","status","holder_name"],
+    "vendor":["id","name","email","ph","company","bank_name","acc_no","address","branch","ifsc","status","holder_name"],
+    "driver":["id","name","email","ph","bank_name","acc_no","address","branch","ifsc","status","holder_name"],
+    "truck":["id","name","number","driver_id","status"],
+    "product":["id","name","code","weight","unit","description","status"],
+    "part_challan" : ["id","vendor_id","date","code","status","description"],
+    "full_challan" : ["id","truck_id","driver_id","date","code","from","to","status","description"],
+    "dispatch" : ["id","truck_id","driver_id","date","code","from","to","status","description"],
+    "part_challan_item" : ["id","part_challan_id","product_id","quantity"],
+    "full_challan_item" : ["id","full_challan_id","part_challan_id","product_id","quantity","dispatch_unit"],
+    "dispatch_item" : ["id","dispatch_id","part_challan_id","product_id","quantity","dispatch_unit","unit_price","total"],
+    "settings": ["id", "name", "email","ph","address","logo","signature","designation"],
+    "payment":["id","date","vendor","total","due","payable_amount","from","to","note","part_challan_id"],
+    "payment_item":["id","payment_id","product_id","quantity","unit_price","total"]
+  },
+  "db": {
+    "mysql": {
+        "host": "localhost",
+        "user": "root",
+        "pass": "",
+        "dbname": "transport",
+        "port":3306
+    },
+    "mysql_": {
+      "host": "localhost",
+      "user": "pixpower",
+      "pass": "DokuMe@123$",
+      "dbname": "transport",
+      "port":3306
+  }
+  }
+}

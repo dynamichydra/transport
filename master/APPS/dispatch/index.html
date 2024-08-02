@@ -1,0 +1,104 @@
+<style type="text/css">
+    .actionBtn {
+        margin: 0px 5px;
+        cursor: pointer;
+    }
+
+    .enable {
+        color: green !important;
+    }
+
+    .disable {
+        color: brown !important;
+    }
+
+    .complete {
+        color: green;
+    }
+
+    .confirm {
+        color: grey;
+    }
+
+    .cancel {
+        color: red;
+    }
+
+    .pending {
+        /* color:  #F7CB73; */
+        color: #F29339;
+    }
+</style>
+<div class="profile adminClientSrc">
+    <div class="walletContainer">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class=" col-2 input-containe">
+                    <input type="date" id="iDfrom" placeholder="Date From" />
+                </div>
+                <div class=" col-2 input-containe">
+                    <input type="date" id="iDto" placeholder="Date To" />
+                </div>
+                <div class=" col-2 input-containe">
+                    <input type="text" id="iId" placeholder="dispatch Code" />
+                </div>
+                <div class=" col-2 input-containe">
+                    <select type="text" id="iStatus">
+                        <option value="-1">All</option>
+                        <option value="0">Pending</option>
+                        <option value="3">Complete</option>
+                    </select>
+                </div>
+                <div class=" col-1">
+                    <div class="gameButton searchQuotation"> <i class="bi bi-binoculars"></i> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center mb-2">Dispatch</h3>
+            <div class="table-responsive">
+                <table class="table table-striped" id="tblInvoice">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">Driver</th>
+                            <th scope="col">Truck</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <tfoot>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item">
+                                <a class="page-link Previous" role="button" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link Next" role="button" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </tfoot>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="APPS/dispatch/modules/dispatch.js"></script>

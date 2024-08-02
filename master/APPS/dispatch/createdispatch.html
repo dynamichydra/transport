@@ -1,0 +1,61 @@
+<div class="container mt-3">
+    <div class="card mt-4">
+        <div class="card-body">
+            <div class="full_challan_form" id="full_challan_form">
+
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="dispatch" tabindex="-1" aria-labelledby="dispatchLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="dispatchLabel">Dispatch Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-2 mt-3 text-end">Challan Date</div>
+                    <div class="col-4 mt-3 input-container">
+                        <input type="date" class="qDate" value="" />
+                    </div>
+                
+                
+                    <div class="col-2 mt-3 text-end">From</div>
+                    <div class="col-4 mt-3 input-container">
+                        <input type="text" class="qFrom" value="" />
+                    </div>
+                    <div class="col-2 mt-3 text-end"> To</div>
+                    <div class="col-4 mt-3 input-container">
+                        <input type="text" class="qTo" value="" />
+                    </div>
+                
+                
+                    <div class="col-2 mt-3 text-end">Description</div>
+                    <div class="col-4 mt-3 input-container">
+                        <textarea class="qDescription"></textarea>
+                    </div>
+                
+                </div>  
+                <div class="col-12 my-3">
+                    <div class="row quotationItem head">
+                        <div class="col-2 input-container">Part Challan </div>
+                        <div class="col-2 input-container">Products</div>
+                        <div class="col-2 input-container">Quantity</div>
+                        <div class="col-2 input-container">Dispatch Quantity</div>
+                    </div>
+                    <div class="dItemArea">
+
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                 
+                </div>
+           </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="APPS/dispatch/modules/createdispatch.js"></script>
