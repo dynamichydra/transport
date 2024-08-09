@@ -210,12 +210,12 @@ var DM_CORE = (function () {
     <div><a href="#/part_challan" class="d-flex gap-1">Part Challan</a></div>
     <div><a href="#/full_challan" class="d-flex gap-1">Full Challan</a></div>
     <div><a href="#/dispatch" class="d-flex gap-1">Dispatch</a></div>
-    <div><a href="#/vendor" class="d-flex gap-1">Vendor</a></div>
-    <div><a href="#/truck" class="d-flex gap-1">Truck</a></div>
-    <div><a href="#/driver" class="d-flex gap-1">Driver</a></div>
-    <div><a href="#/product" class="d-flex gap-1">Product</a></div>
     <div><a href="#/payment" class="d-flex gap-1">Payment</a></div>
     <div><a href="#/reports" class="d-flex gap-1">Reports</a></div>
+    <div><a href="#/product" class="d-flex gap-1">Product</a></div>
+    <div><a href="#/truck" class="d-flex gap-1">Truck</a></div>
+    <div><a href="#/driver" class="d-flex gap-1">Driver</a></div>
+    <div><a href="#/vendor" class="d-flex gap-1">Vendor</a></div>
     <div><a href="#/user" class="d-flex gap-1">User</a></div>
     <div><a href="#/settings" class="d-flex gap-1">Settings</a></div>
     `;

@@ -34,19 +34,19 @@
         <div class="container">
             <div class="row">
                 <div class=" col-2 input-containe">
-                    <input type="date" id="iDfrom" placeholder="Date From" />
+                    <input class="form-control" type="date" id="iDfrom" placeholder="Date From" />
                 </div>
                 <div class=" col-2 input-containe">
-                    <input type="date" id="iDto" placeholder="Date To" />
+                    <input class="form-control" type="date" id="iDto" placeholder="Date To" />
                 </div>
                 <div class=" col-2 input-containe">
-                    <input type="text" id="iId" placeholder="Part Challan Code" />
+                    <input  class="form-control" type="text" id="iId" placeholder="Part Challan Code" />
                 </div>
                 <div class=" col-2 input-containe">
-                    <select type="text" id="iClient"></select>
+                    <select class="form-select" id="iClient"></select>
                 </div>
                 <div class=" col-2 input-containe">
-                    <select type="text" id="iStatus">
+                    <select class="form-select" id="iStatus">
                         <option value="-1">All</option>
                         <option value="0">Pending</option>
                         <option value="3">Complete</option>
@@ -69,7 +69,7 @@
         <div class="card-body">
             <h3 class="text-center mb-2">Part Challan</h3>
             <div class="table-responsive">
-                <table class="table table-striped" id="tblInvoice">
+                <table class="table table-striped" id="tblChallan">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -104,5 +104,6 @@
         </div>
     </div>
 </div>
-
+<script src="APPS/part_challan/modules/print.js"></script>
+<script src="APPS/part_challan/modules/front.js"></script>
 <script src="APPS/part_challan/modules/part_challan.js"></script>

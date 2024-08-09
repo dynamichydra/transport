@@ -3,13 +3,13 @@
 (function () {
 
     const popup = document.getElementById("sitePopup");
-    let invoices = [];
+    let partChallanJson = [];
     let clients = [];
-    let trucks = [];
     let products = [];
     let removeItems = [];
     let DATALIMIT = 15;
     let DATASTART = 0;
+    let settings = '';
     init();
 
     async function init() {
@@ -17,7 +17,8 @@
         $('#iDto').val(moment(new Date()).format('YYYY-12-31'));
         getClients();
         getProducts();
-        getInvoice();
+        getChallan();
+        getSettings();
         bindEvents();
     }
 
@@ -26,29 +27,30 @@
         $('#sitePopup').on('click', '#closePopup,.cancelBtn', function () {
             popup.style.display = "none";
         });
-        $('.createQuotation').on('click', invoicePopup);
+        $('.createQuotation').on('click', challanPopup);
         $('#sitePopup').on('click', '.newItemBtn', function () {
-            addQuotationItem();
+            addProduct();
         });
         $('#sitePopup').on('click', '.bi-trash', removeItem);
         $('#sitePopup').on('click', '.saveBtn', savePartChallan);
-        $('.searchQuotation').on('click', getInvoice);
-        $('#tblInvoice').on('click', `[data-editid]`, invoicePopup);
-        $('#tblInvoice').on('click', `[data-statusid]`, statusPopup);
+        $('.searchQuotation').on('click', getChallan);
+        $('#tblChallan').on('click', `[data-editid]`, challanPopup);
+        $('#tblChallan').on('click', `[data-statusid]`, statusPopup);
         $('#sitePopup').on('click', '.statusSaveBtn', statusSave);
+        $('#tblChallan').on('click', `[data-printid]`, printChallan);
         $('.container').on('click', `.Next`, function () {
             DATASTART = DATASTART + DATALIMIT;
-            getInvoice()
+            getChallan()
         });
         $('.container').on('click', `.Previous`, function () {
             if (DATASTART > 0) {
                 DATASTART = DATASTART - DATALIMIT;
-                getInvoice()
+                getChallan()
             }
         });
     }
 
-    function getInvoice() {
+    function getChallan() {
         DM_TEMPLATE.showBtnLoader(elq('.searchQuotation'), true);
         let qId = $('#iId').val();
         let iDto = $('#iDto').val();
@@ -86,12 +88,12 @@
             select: "part_challan.*, vendor.name vName"
         }, function (data) {
             if (data.SUCCESS) {
-                invoices = data.MESSAGE;
-                console.log(invoices);
-                $('#tblInvoice tbody').html('');
+                partChallanJson = data.MESSAGE;
+                console.log(partChallanJson);
+                $('#tblChallan tbody').html('');
                 if (data.MESSAGE.length > 0) {
                     data.MESSAGE.map((e) => {
-                        $('#tblInvoice tbody').append(`
+                        $('#tblChallan tbody').append(`
               <tr>
                 <td>${e.id}</td>
                 <td>${e.code}</td>
@@ -109,9 +111,9 @@
             `);
                     });
                 } else {
-                    $('#tblInvoice tbody').append(`
+                    $('#tblChallan tbody').append(`
               <tr>
-                <td colspan="8">No record found</td>
+                <td colspan="8" class="text-center">No record found</td>
               </tr>
             `);
                 }
@@ -148,6 +150,17 @@
         });
     }
 
+    function getSettings() {
+        let cnd = [];
+        backendSource.getObject('settings', null, { where: cnd }, function (data) {
+            if (data.SUCCESS) {
+                if (data.MESSAGE.length > 0) {
+                    // console.log(data);
+                    settings = data.MESSAGE.at(-1);
+                }
+            }
+        });
+    }
 
     function removeItem() {
         let itemId = $(this).closest('.quotationItem').attr('data-itemid');
@@ -157,15 +170,15 @@
     }
 
 
-    function invoicePopup() {
+    function challanPopup() {
         const uid = $(this).attr('data-editid');
-        const invoice = invoices.find((e) => { return e.id == uid });
+        const challan = partChallanJson.find((e) => { return e.id == uid });
         let cOpt = `<option value="">Select vendor</option>`;
 
         removeItems = [];
 
         clients.map((e) => {
-            cOpt += `<option value="${e.id}" ${invoice && invoice.vendor_id == e.id ? `selected` : ``}>${e.name}</option>`;
+            cOpt += `<option value="${e.id}" ${challan && challan.vendor_id == e.id ? `selected` : ``}>${e.name}</option>`;
         });
 
 
@@ -176,23 +189,23 @@
           <div class="row">
             <div class="col-2 mt-3 text-end">Challan Code</div>
             <div class="col-4 mt-3 input-container">
-              <input type="text" class="qCode"  value="${invoice ? invoice.code : ''}"/>
+              <input type="text" class="qCode"  value="${challan ? challan.code : ''}"/>
             </div>
             <div class="col-2 mt-3 text-end">Vendor</div>
             <div class="col-4 mt-3 input-container">
               <select  class="qVendor">${cOpt}</select>
             </div>
  
-            <div class="col-2 mt-3 text-end">part Challan Date</div>
+            <div class="col-2 mt-3 text-end">Challan Date</div>
             <div class="col-4 mt-3 input-container">
-              <input type="date" class="qDate"  value="${invoice ? moment(invoice.date).format('YYYY-MM-DD') : ''}"/>
+              <input type="date" class="qDate"  value="${challan ? moment(challan.date).format('YYYY-MM-DD') : ''}"/>
             </div>
  
 
           
             <div class="col-2 mt-3 text-end">Description</div>
             <div class="col-4 mt-3 input-container">
-              <textarea  class="qDescription">${invoice ? invoice.description : ''}</textarea>
+              <textarea  class="qDescription">${challan ? challan.description : ''}</textarea>
             </div>
           
             
@@ -206,32 +219,32 @@
 
             <div class="col-4 mt-3">&nbsp;</div>
             <div class="col-8 mt-3">
-              <span class="gameButton newItemBtn mx-3"> Add new Item </span>
+              <span class="gameButton newItemBtn mx-3"> Add new item </span>
               <span class="gameButton saveBtn mx-3"> Save </span>
               <span class="gameButton cancelBtn"> Cancel </span>
-              <input type="hidden" class="uId" value="${invoice ? invoice.id : ''}"/>
+              <input type="hidden" class="uId" value="${challan ? challan.id : ''}"/>
             </div>
           </div>
         </div>
       </div>`);
 
         popup.style.display = "block";
-        if (invoice) {
+        if (challan) {
             backendSource.getObject('part_challan_item', null, {
-                where: [{ 'key': 'part_challan_id', 'operator': 'is', 'value': invoice.id }]
+                where: [{ 'key': 'part_challan_id', 'operator': 'is', 'value': challan.id }]
             }, function (data) {
                 if (data.SUCCESS) {
                     for (let i in data.MESSAGE) {
-                        addQuotationItem(data.MESSAGE[i]);
+                        addProduct(data.MESSAGE[i]);
                     }
                 }
             })
         } else {
-            addQuotationItem();
+            addProduct();
         }
     }
 
-    function addQuotationItem(item) {
+    function addProduct(item) {
         console.log(item)
         let pOpt = `<option value="">Select Product</option>`;
         products.map((e) => {
@@ -321,22 +334,22 @@
 
     function statusPopup() {
         const uid = $(this).attr('data-statusid');
-        const invoice = invoices.find((e) => { return e.id == uid });
+        const challan = partChallanJson.find((e) => { return e.id == uid });
         $(`#sitePopup`).html(`<div class="popup-content">
         <span class="close" id="closePopup">&times;</span>
         <h2>Change status</h2>
         <div class="container">
           <div class="row">
-            <div class="col-4 mt-3">Invoice</div>
-            <div class="col-8 mt-3 input-container">${invoice ? invoice.code : ''} / ${invoice ? moment(invoice.i_date).format('DD-MM-YYYY') : ''} / ${invoice ? invoice.due : ''}</div>
+            <div class="col-4 mt-3">Challan</div>
+            <div class="col-8 mt-3 input-container">${challan ? challan.code : ''} / ${challan ? moment(challan.i_date).format('DD-MM-YYYY') : ''}</div>
             <div class="col-4 mt-3">Status</div>
             <div class="col-8 mt-3 input-container">
             <select type="text" class="cStatus">
-              <option ${invoice && invoice.status == 2 ? 'selected' : ''} value="2">Cancel</option>
-              <option ${invoice && invoice.status == 0 ? 'selected' : ''} value="0">Pending</option>
-              <option ${invoice && invoice.status == 3 ? 'selected' : ''} value="3">Complete</option>
+              <option ${challan && challan.status == 2 ? 'selected' : ''} value="2">Cancel</option>
+              <option ${challan && challan.status == 0 ? 'selected' : ''} value="0">Pending</option>
+              <option ${challan && challan.status == 3 ? 'selected' : ''} value="3">Complete</option>
             </select>
-            <input type="hidden" class="uId" value="${invoice ? invoice.id : ''}"/>
+            <input type="hidden" class="uId" value="${challan ? challan.id : ''}"/>
             </div>
             <div class="col-4 mt-3">&nbsp;</div>
             <div class="col-8 mt-3"><span class="gameButton statusSaveBtn"> Save </span></div>
@@ -350,8 +363,6 @@
     async function statusSave() {
         DM_TEMPLATE.showBtnLoader(elq('.statusSaveBtn'), true);
         let id = $('.uId').val();
-        let invoice = invoices.find((i) => i.id == id);
-        console.log(invoice);
         if (id && id.trim() != '') {
 
             backendSource.saveObject('part_challan', id, {
@@ -371,4 +382,183 @@
         }
     }
 
+    function printChallan() {
+        const uid = $(this).attr('data-printid');
+        const challan = partChallanJson.find((e) => { return e.id == uid });
+        if (challan) {
+            backendSource.getObject('part_challan_item', null, {
+                where: [{ 'key': 'part_challan_id', 'operator': 'is', 'value': challan.id }]
+            }, function (data) {
+                if (data.SUCCESS) {
+                    createPrintTable(data.MESSAGE, challan);
+                }
+            })
+        }
+    }
+
+    async function createPrintTable(item, challan) {
+        let challanHeader = ["Sl No", "Product", "Quantity",];
+        let tableHeader = [];
+        let blob = await fetch("whitelabel/game/img/logo.png").then(r => r.blob());
+        let dataUrl = await new Promise(resolve => {
+            let reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
+
+        challanHeader.forEach((d) => {
+            tableHeader.push({
+                text: d,
+                fontSize: 12,
+                color: "white",
+                bold: true,
+            })
+        })
+
+        let challanData = [tableHeader];
+
+        item.forEach((item, index) => {
+            let product = products.find((e) => item.product_id == e.id)
+            challanData.push([
+                index + 1,
+                { text: product && product.name, alignment: "left" },
+                 item ? item.quantity : '1',
+            ])
+        });
+        let prop = {
+            content: [
+                {
+                    image: dataUrl,
+                    width: 150,
+                },
+                {
+                    columns: [
+                        {
+                            style: 'tableExample',
+                            width: '50%',
+                            table: {
+                                widths: ['100%'],
+                                heights: [20, 10],
+                                body: [
+                                    [
+                                        {
+                                            text: `Address: ${settings.address}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            text: `Phone Number: ${settings.ph}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            text: `Email: ${settings.email}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                ],
+                            },
+                        },
+                        {
+                            style: 'tableExample',
+                            width: '50%',
+                            layout: {
+                                fillColor: function (rowIndex, node, columnIndex) {
+                                    return (rowIndex === 0) ? 'gray' : null;
+                                }
+                            },
+                            table: {
+                                widths: ['100%'],
+                                heights: [20, 10],
+                                body: [
+                                    [
+                                        {
+                                            text: 'Part Challan',
+                                            fontSize: 14,
+                                            width: '100%',
+                                            bold: true,
+                                            color: "white",
+                                            alignment: "center"
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            text: `Date: ${challan ? moment(challan.date).format('DD-MM-YYYY') : ''}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            text: `Challan Number: ${challan ? challan.code : ""}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                ],
+                            },
+                        }
+                    ],
+                    columnGap: 10
+                },
+                {
+                    text: `Challan Products`,
+                    fontSize: 16,
+                    width: '100%',
+                    bold: true,
+                    alignment: "center",
+                    margin:20
+                },
+                {
+                    layout: {
+                        fillColor: function (rowIndex, node, columnIndex) {
+                            return (rowIndex === 0) ? 'gray' : null;
+                        }
+                    },
+                    alignment: "center",
+                    margin: [0, 10, 0, 20],
+                    table: {
+                        widths: ['15%','60%', "25%"],
+                        body: challanData
+                    }
+                },
+                {
+                    columns: [
+                        {
+                            style: 'tableExample',
+                            width: '50%',
+                            layout: 'noBorders',
+                            margin: [0, 20, 0, 20],
+                            table: {
+                                widths: ['100%'],
+                                body: [
+                                    [
+                                        {
+                                            text: 'monir',
+                                            fontSize: 12,
+                                            bold: true,
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            text: `${settings.name}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            text: `${settings.designation}`,
+                                            fontSize: 12,
+                                        }
+                                    ],
+                                ],
+                            },
+                        },
+                    ],
+                    columnGap: 10
+                },
+            ]
+        }
+        pdfMake.createPdf(prop).download();
+    }
 })();
