@@ -18,20 +18,20 @@
     }
 
     function bindEvents() {
-        $('#full_challan_form').on('click', '#closePopup,.cancelBtn', function () {
+        $('#dispatchForm').on('click', '#closePopup,.cancelBtn', function () {
             window.location.replace("/master/index.html#/dispatch");
         });
         $('.submitSearch').on('click', submitSeachFrom);
-        $('#full_challan_form').on('change', '.qItemNoQuantity,.qItemPrice ,.check', function () {
+        $('#dispatchForm').on('change', '.qItemNoQuantity,.qItemPrice ,.check', function () {
             calculateSingleItem($(this).closest('.quotationItem'));
         });
-        $('#full_challan_form').on('keyup', '.qItemNoQuantity,.qItemPrice ,.check', function () {
+        $('#dispatchForm').on('keyup', '.qItemNoQuantity,.qItemPrice ,.check', function () {
             calculateSingleItem($(this).closest('.quotationItem'));
         });
-        $('#full_challan_form').on('change', '.qDiscount', calculateTotal);
-        $('#full_challan_form').on('keyup', '.qDiscount', calculateTotal);
-        $('#full_challan_form').on('keyup', '.qPayable', calculateTotal);
-        $('#full_challan_form').on('click', '.saveBtn', saveFullchallan);
+        $('#dispatchForm').on('change', '.qDiscount', calculateTotal);
+        $('#dispatchForm').on('keyup', '.qDiscount', calculateTotal);
+        $('#dispatchForm').on('keyup', '.qPayable', calculateTotal);
+        $('#dispatchForm').on('click', '.saveBtn', saveFullchallan);
     }
 
     function getTruck() {
@@ -75,8 +75,9 @@
         truckArray.map((e) => {
             tOpt += `<option value="${e.id}" ${data && data.truck_id == e.id ? `selected` : ``}>${e.name}(${e.number})</option>`;
         });
-        $("#full_challan_form").html(`
+        $("#dispatchForm").html(`
             <div class="row">
+            <div class="col-12 mt-1 text-center fw-semibold fs-5">Add/Edit Dispatch Price</div>
             <div class="col-2 mt-3 text-end">Challan Code</div>
             <div class="col-4 mt-3 input-container">
               <input type="text" class="qCode" disabled value="${data.code}"/>
@@ -209,16 +210,16 @@
     }
     function calculateTotal() {
         let tot = 0;
-        $('#full_challan_form').find('.qItemTotal').each(function (i, obj) {
+        $('#dispatchForm').find('.qItemTotal').each(function (i, obj) {
             if (parseFloat($(this).val()) > 0 && document.querySelectorAll(".check")[i].checked) {
                 tot += parseFloat($(this).val());
             }
         });
-        let pay = $('#full_challan_form').find('.qPayable').val();
+        let pay = $('#dispatchForm').find('.qPayable').val();
         pay = parseFloat(pay) > 0 ? parseFloat(pay) : 0;
-        $('#full_challan_form').find('.qSubTotal').val(tot);
+        $('#dispatchForm').find('.qSubTotal').val(tot);
         console.log(tot)
-        $('#full_challan_form').find('.qTotal').val(tot - (pay));
+        $('#dispatchForm').find('.qTotal').val(tot - (pay));
 
     }
 
@@ -271,7 +272,7 @@
                         ID_RESPONSE: removeItems[i]
                     });
                 }
-                $('#full_challan_form').find('.quotationItem.item').each(function (i, obj) {
+                $('#dispatchForm').find('.quotationItem.item').each(function (i, obj) {
                     let prod = $(this).find('.qItemProduct').val();
                     let qnt = $(this).find('.qItemNoQuantity').val();
                     let dispatch = $(this).find('.qItemDispatch').val();

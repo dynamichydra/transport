@@ -111,12 +111,13 @@
                 $('#tblTruck tbody').html('');
                 if (data.MESSAGE.length > 0) {
                     data.MESSAGE.map((e) => {
-                        $('#tblTruck tbody').append(`
+                        let driver = driverArray.find((d)=>d.id==e.driver_id)
+                $('#tblTruck tbody').append(`
               <tr>
                 <td>${e.id}</td>
                 <td>${e.name}</td>
                 <td >${e.number}</td>
-                <td >${e.driver_id}</td>
+                <td >${driver?driver.name:''}</td>
                 <td class="${e.status == 1 ? 'enable' : 'disable'}">${e.status == 1 ? 'Enable' : 'Disable'}</td>
                 <td>
                  <div style="display:flex; justify-content:start">

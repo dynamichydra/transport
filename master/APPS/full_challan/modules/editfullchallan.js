@@ -68,7 +68,7 @@
         });
         $("#full_challan_form").html(`
             <div class="row">
-            <div class="col-12 mt-1 text-center fw-semibold fs-5">Edit full challan</div>
+            <div class="col-12 mt-1 text-center fw-semibold fs-5">Edit Full Challan</div>
             <div class="col-2 mt-3 text-end">Challan Code</div>
             <div class="col-4 mt-3 input-container">
               <input type="text" class="qCode"  value="${data.code}"/>

@@ -43,7 +43,7 @@
                    $('#vendor').html('');
                     let html = '<option value="">Select Challan</option>'
                     partChallan.forEach((t) => {
-                        html += `<option value="${t.id}">challan ${t.id}</option>`
+                        html += `<option value="${t.id}">Challan ${t.id}</option>`
                     });
                     $('#vendor').html(html);
                 }

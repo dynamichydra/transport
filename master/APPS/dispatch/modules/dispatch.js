@@ -118,7 +118,7 @@
         <div class="container">
           <div class="row">
             <div class="col-4 mt-3">Invoice</div>
-            <div class="col-8 mt-3 input-container">${invoice ? invoice.code : ''} / ${invoice ? moment(invoice.i_date).format('DD-MM-YYYY') : ''} / ${invoice ? invoice.due : ''}</div>
+            <div class="col-8 mt-3 input-container">${invoice ? invoice.code : ''} / ${invoice ? moment(invoice.i_date).format('DD-MM-YYYY') : ''}</div>
             <div class="col-4 mt-3">Status</div>
             <div class="col-8 mt-3 input-container">
             <select type="text" class="cStatus">
