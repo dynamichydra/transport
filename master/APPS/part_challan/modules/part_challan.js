@@ -27,13 +27,13 @@
         $('#sitePopup').on('click', '#closePopup,.cancelBtn', function () {
             popup.style.display = "none";
         });
-        $('.createQuotation').on('click', challanPopup);
+        $('.createChallan').on('click', challanPopup);
         $('#sitePopup').on('click', '.newItemBtn', function () {
             addProduct();
         });
         $('#sitePopup').on('click', '.bi-trash', removeItem);
         $('#sitePopup').on('click', '.saveBtn', savePartChallan);
-        $('.searchQuotation').on('click', getChallan);
+        $('.searchChallan').on('click', getChallan);
         $('#tblChallan').on('click', `[data-editid]`, challanPopup);
         $('#tblChallan').on('click', `[data-statusid]`, statusPopup);
         $('#sitePopup').on('click', '.statusSaveBtn', statusSave);
@@ -51,7 +51,7 @@
     }
 
     function getChallan() {
-        DM_TEMPLATE.showBtnLoader(elq('.searchQuotation'), true);
+        DM_TEMPLATE.showBtnLoader(elq('.searchChallan'), true);
         let qId = $('#iId').val();
         let iDto = $('#iDto').val();
         let iDfrom = $('#iDfrom').val();
@@ -118,7 +118,7 @@
             `);
                 }
             }
-            DM_TEMPLATE.showBtnLoader(elq('.searchQuotation'), false);
+            DM_TEMPLATE.showBtnLoader(elq('.searchChallan'), false);
         });
     }
 
@@ -252,10 +252,10 @@
         });
         $('.qItemArea').append(`<div class="row quotationItem item" data-itemid="${item ? item.id : ''}">
         <div class="col-3 input-container">
-          <select  class="qItemProduct">${pOpt}</select>
+          <select  class="cItemProduct">${pOpt}</select>
         </div>
         <div class="col-2 input-container">
-          <input type="number" class="qItemNoQuantity"  value="${item ? item.quantity : '1'}"/>
+          <input type="number" class="cItemNoQuantity"  value="${item ? item.quantity : '1'}"/>
         </div>
        <div class="col-1 input-container"><span><i class="bi bi-trash"></i></span></div> 
       </div>`);
@@ -301,8 +301,8 @@
                     });
                 }
                 $('#sitePopup').find('.quotationItem.item').each(function (i, obj) {
-                    let prod = $(this).find('.qItemProduct').val();
-                    let qnt = $(this).find('.qItemNoQuantity').val();
+                    let prod = $(this).find('.cItemProduct').val();
+                    let qnt = $(this).find('.cItemNoQuantity').val();
                     let oId = $(this).attr('data-itemid');
                     if (prod && prod != '') {
                         let tItem = {
