@@ -34,26 +34,26 @@
         <div class="container">
             <div class="row justify-content-end">
                 <div class=" col-2 input-containe">
-                    <input type="date" id="iDfrom" placeholder="Date From" />
+                    <input class="form-control" type="date" id="iDfrom" placeholder="Date From" />
                 </div>
                 <div class=" col-2 input-containe">
-                    <input type="date" id="iDto" placeholder="Date To" />
+                    <input class="form-control" type="date" id="iDto" placeholder="Date To" />
                 </div>
                 <div class=" col-2 input-containe">
-                    <input type="text" id="iId" placeholder="full challan code" />
+                    <input class="form-control" type="text" id="iCode" placeholder="Full challan code" />
                 </div>
                 <div class=" col-2 input-containe">
-                    <select type="text" id="iStatus">
+                    <select class="form-select" id="iStatus">
                         <option value="-1">All</option>
                         <option value="0">Pending</option>
                         <option value="3">Complete</option>
                     </select>
                 </div>
                 <div class=" col-1">
-                    <div class="gameButton searchQuotation"> <i class="bi bi-binoculars"></i> </div>
+                    <div class="gameButton searchChallan"> <i class="bi bi-binoculars"></i> </div>
                 </div>
                 <div class=" col-1">
-                    <a href="/master/index.html#/full_challan/createfullchallan"><div class="gameButton"><i class="bi bi-person-plus"></i></div></a>
+                    <a href="/master/index.html#/full_challan/createfullchallan"><div class="gameButton"><i class="bi bi-plus-lg"></i></div></a>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
         <div class="card-body">
             <h3 class="text-center mb-2">Full Challan</h3>
             <div class="table-responsive">
-                <table class="table table-striped" id="tblInvoice">
+                <table class="table table-striped" id="tblChallan">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -104,5 +104,6 @@
         </div>
     </div>
 </div>
-
+<script src="APPS/part_challan/modules/print.js"></script>
+<script src="APPS/part_challan/modules/front.js"></script>
 <script src="APPS/full_challan/modules/full_challan.js"></script>

@@ -94,7 +94,7 @@
             <div class="col-2 mt-3 text-end">Truck</div>
             <div class="col-4 mt-3 input-container">
                <select  class="qTruck" >
-               <option >${tOpt}</option>
+               ${tOpt}
                </select>
             </div>
             <div class="col-2 mt-3 text-end">Driver</div>
@@ -172,7 +172,7 @@
           <input class="form-check-input check" type="checkbox" checked value="" id="check">
         </div>
         
-        <div class="col-2 input-container">part Challan - ${partChallanId}</div>
+        <div class="col-2 input-container">Part Challan - ${partChallanId}</div>
         <div class="col-3 input-container">
           <select  class="qItemProduct">${pOpt}</select>
         </div>
